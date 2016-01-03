@@ -5,7 +5,7 @@ import scala.collection.mutable.ListBuffer
 /**
   * Created by haoyuan on 12/30/2015.
   */
-trait ex3_2 {
+object Ex3_2 extends App {
   def tail[A](l: List[A]) : List[A] = l match {
     case Nil => Nil
     case _ :: tail => tail
@@ -45,4 +45,25 @@ trait ex3_2 {
     l.foldRight(1)(_ * _)
   }
 
+  def length[A](as: List[A]): Int = {
+    as.foldRight(0)((_,y) => y + 1)
+  }
+
+  println(length(List(1,2,3,4)))
+
+  @annotation.tailrec
+  def foldLeft[A,B](as: List[A], acc: B)(op:(B, A) => B): B = {
+    as match {
+      case Nil => acc
+      case (head :: tail) => foldLeft(tail, op(acc,head))(op)
+    }
+  }
+
+  def reverse[A](as: List[A]): List[A] = {
+    (as foldLeft List[A]())((x,y)=>y::x)
+  }
+
+
 }
+
+
